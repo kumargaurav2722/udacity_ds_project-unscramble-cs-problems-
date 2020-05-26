@@ -1,3 +1,7 @@
+"""
+Read file into texts and calls.
+It's ok if you don't understand how to read files.
+"""
 import csv
 with open('texts.csv', 'r') as f:
     reader = csv.reader(f)
@@ -14,13 +18,22 @@ How many different telephone numbers are there in the records?
 Print a message:
 "There are <count> different telephone numbers in the records."
 """
-telephone_numbers = set()
-for i in range(len(texts)):
-    telephone_numbers.add(texts[i][0])
-    telephone_numbers.add(texts[i][1])
-for i in range(len(calls)):
-    telephone_numbers.add(calls[i][0])
-    telephone_numbers.add(calls[i][1])
 
-print("There are {} different telephone numbers in the records.".format(
-    len(telephone_numbers)))
+
+phoneNumbers = set()
+
+for record in texts:
+    phoneNumbers.add(record[0])
+    phoneNumbers.add(record[1])
+
+for record in calls:
+    phoneNumbers.add(record[0])
+    phoneNumbers.add(record[1])
+
+
+#print(f"There are {len(text)} telephone numbers in the records.")
+#print(f"There are {len(calls)} telephone numbers in the records.")
+
+#print(*phoneNumbers, sep='\n')
+print(
+    f"There are {len(phoneNumbers)} different telephone numbers in the records.")
