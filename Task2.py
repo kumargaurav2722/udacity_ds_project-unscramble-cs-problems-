@@ -1,7 +1,10 @@
-from itertools import chain
-from collections import deque, defaultdict
-from datetime import datetime
+"""
+Read file into texts and calls.
+It's ok if you don't understand how to read files
+"""
 import csv
+import operator
+
 with open('texts.csv', 'r') as f:
     reader = csv.reader(f)
     texts = list(reader)
@@ -18,17 +21,12 @@ Print a message:
 "<telephone number> spent the longest time, <total time> seconds, on the phone during 
 September 2016.".
 """
-calls_dictionary = defaultdict(int)
 
+d = {}
+for call in calls:
+    for phone in call[:2]:
+        d[phone] = d.get(phone, 0) + int(call[3])
+longest_call_duration = max(d.items(), key=operator.itemgetter(1))
 
-for caller, reciever, timestamp, duration in calls:
-    date = datetime.strptime(timestamp, "%d-%m-%Y %H:%M:%S")
-    if date.year == 2016 and date.month == 9:
-        calls_dictionary[caller] += int(duration)
-        calls_dictionary[reciever] += int(duration)
-
-template = "{} spent the longest time, {} seconds, on the phone during September 2016."
-
-
-highest_duration = max(calls_dictionary.items(), key=lambda x: x[1])
-print(template.format(*highest_duration))
+print(longest_call_duration[0], 'spent the longest time,', longest_call_duration[1],
+      'seconds, on the phone during September 2016.')
